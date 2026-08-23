@@ -34,13 +34,15 @@ cd ..
 ### 2. Data Processing
 Convert the VCTK and L2-Arctic (L2A) datasets into speech units with pitch information.
 VCTK
-```CUDA_VISIBLE_DEVICES=0 nohup python s2u-VCTK.py \
+```
+CUDA_VISIBLE_DEVICES=0 nohup python s2u-VCTK.py \
     --VCTK \
     --with_pitch_unit \
     > vctk_process.txt 2>&1 &
 ```
 L2-Arctic
-```CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
+```
+CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
     --with_pitch_unit \
     > l2a_process.txt 2>&1 &
 ```
