@@ -31,7 +31,7 @@ cd ..
 
 > **Note:** Minor compatibility issues may occur when installing `textlesslib` and `fairseq`, but they do not currently affect model training or evaluation.
 
-### 2. Data Processing
+## 2. Data Processing
 Convert the VCTK and L2-Arctic datasets into speech units with pitch information. You need to configure `--datadir` and `--outdir` by yourself.
 
 VCTK
@@ -50,10 +50,25 @@ CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
 Both commands run in the background. Processing logs are saved to `vctk_process.txt` and `l2a_process.txt`, respectively.
 
 
-## 3. Get the Vocoder
+## 3. Get the Vocoder and Pre-trained UUVC model
 
 We use the pretrained [HiFi-GAN vocoder](https://github.com/jik876/hifi-gan). Download the [Universal-V1](https://drive.google.com/drive/folders/1YuOoV3lO2-Hhn1F2HJ2aQ4S0LC1JdKLd) model and place its checkpoint files in:
 
 ```text
 vocoder/cp_hifigan/
 ```
+
+## 4. Download the Pretrained UUVC Model
+
+Download the pretrained UUVC model from the following link:
+
+[Download the pretrained UUVC model](https://cmu.app.box.com/s/76f7kkhuns929da4kaafjqqk2x7nf2d3)
+
+Place the downloaded checkpoint in the corresponding model checkpoint directory before running training or inference.
+
+```text
+pretrained_LibriTTS360_VCTK_ESD-selected/
+```
+
+
+
