@@ -101,8 +101,6 @@ if args.VCTK:
 
 
 for f in tqdm(wavfiles):
-#    if f.stem + '-unit' in processed:
-#        continue
     wav, sr = torchaudio.load(str(f))
     wav = wav.cuda()
     wav_16k = wav
@@ -122,12 +120,7 @@ for f in tqdm(wavfiles):
         units = encoded["units"].cpu().numpy()
         f0 = encoded["f0"].cpu().numpy()
         formants = get_formants_world(wav_16k.cpu().numpy()[0], rate=16000)
-        # print('we are here, f0, formants', f0.shape, '\n', formants)
-        # exit()
-#    except:
-#        print (f.stem)
-#        traceback.print_exc()
-#        continue
+
     name = f.stem
     if args.VCTK:
         name = name.replace('_mic1', '')
