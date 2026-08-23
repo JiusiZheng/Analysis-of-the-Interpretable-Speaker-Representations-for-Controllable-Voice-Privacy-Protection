@@ -103,11 +103,8 @@ if args.VCTK:
     wavfiles = [p for p in wavfiles if '_mic1' in str(p)]
 
 for f in tqdm(wavfiles,unit='file'):
-#    if f.stem + '-unit' in processed:
-#        continue
+
     wav, sr = torchaudio.load(str(f))
-    # print('we are here??',sr) #44100
-    # exit() #yes
     wav = wav.cuda()
     wav_16k = wav
     if sr != 16000:
@@ -118,9 +115,7 @@ for f in tqdm(wavfiles,unit='file'):
         if sr not in transforms_22k:
             continue
         wav = transforms_22k[sr](wav)
-    # print('we are here??')
-    # exit()
-#    try:
+
     mels, energy = mel_spectrogram(wav, 1025, 80, 22050, 256, 1024, 0, 8000, return_energy=True)
     mels, energy = mels.cpu().numpy()[0].T, energy.cpu().numpy()[0]
     if args.with_pitch_unit:
@@ -128,17 +123,12 @@ for f in tqdm(wavfiles,unit='file'):
         units = encoded["units"].cpu().numpy()
         f0 = encoded["f0"].cpu().numpy()
         formants = get_formants_world(wav_16k.cpu().numpy()[0], rate=16000)
-#    except:
-#        print (f.stem)
-#        traceback.print_exc()
-#        continue
+
     
     name = f.stem
     speaker = f.parent.parent.name  
-    # print(speaker,name)
     name = name.replace("arctic", speaker)
-    # print(new_name)
-    # exit()
+
     
     if args.VCTK:
         name = name.replace('_mic1', '')
