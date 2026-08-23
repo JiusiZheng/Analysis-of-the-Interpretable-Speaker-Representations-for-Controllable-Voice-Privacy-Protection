@@ -53,43 +53,14 @@ class SpeechDataset(data.Dataset):
         self.hp = hp
         self.units = self.load_dataset(metadata)
         self.units = [str(x) for x in self.units]
-        # ###
-        # print(metadata)
-        # print(self.units)
-        # exit()
-        # print('************Attributes (gender, age) infomation is added***************')
-        # for x in self.units:
-        #     print(x.split())
-        #     print(x.split()[3])
-        # exit()
 
-        # self.gender = [x.split()[1] for x in self.units]
-        # self.accent = [x.split()[2] for x in self.units]
-        # self.emotion = [x.split()[3] for x in self.units]
         self.units = [x.split()[0] for x in self.units]
-        # self.emotion = [x.split()[3] for x in self.units]
 
-        # for x in self.units:
-        #     tmp = x.split()
-        #     x = tmp[0]
-        #print(self.units[:4])
-        #print(self.accent[:4]) # ['American', 'American', 'English', 'English']
-        # print(self.gender[:4])
-        #exit()
-        # for x in self.units:
-        #     print('x',x.split())
-        #     print(x.split()[0],type(x.split()[0]))
-        #     print('x[:?]',x[:65])
-        #     exit()
-        # ###
         self.data = [x[:-9] + '.wav' for x in self.units]
-        # print('*****',self.data[:4])
         self.mels = [x[:-9] + '-mel.npy' for x in self.units]
-#        self.energy = [x[:-9] + '-E-normalized.npy' for x in self.units]
         self.energy = [x[:-9] + '-E.npy' for x in self.units]
         self.f0 = [x[:-9] + '-f0.npy' for x in self.units]
-        #print('*****',self.f0[:4])
-        #exit()
+
         #Assume 32bit fp PCM, 16000 Hz
         self.lengths = [os.path.getsize(f) / (16000. * 4) for f in self.data]
         bin_size = (self.hp.f0_max - self.hp.f0_min) / self.hp.pitch_bins
@@ -97,43 +68,6 @@ class SpeechDataset(data.Dataset):
         bin_size = self.hp.E_max / self.hp.E_bins
         self.E_bins = torch.arange(self.hp.E_bins, dtype=torch.float32) * bin_size
 
-        # self.gender2idx = {"M": 0, "F": 1}  
-        # self.accent2idx = {
-        #     "Arabic": 0,
-        #     "Chinese": 1,
-        #     "Hindi": 2,
-        #     "Korean": 3,
-        #     "Spanish": 4,
-        #     "Vietnamese": 5,
-        #     "English": 6,
-        #     "Scottish": 7,
-        #     "North_American": 8
-        # }
-        # self.accent2idx = {
-        #     "Arabic": 0,
-        #     "Chinese": 0,
-        #     "Hindi": 0,
-        #     "Korean": 0,
-        #     "Spanish": 0,
-        #     "Vietnamese": 0,
-        #     "Native": 1
-        # }
-        # self.emotion2idx = {
-        #     "neutral": 0,
-        #     "happy": 1,
-        #     "sad": 2,
-        #     "anger": 3
-        # }
-        # self.emotion2idx = {
-        #     "neutral": 0,
-        #     "happy": 1,
-        #     "sad": 1,
-        #     "anger": 1
-        # }
-
-        #Print statistics:
-        # l = len(self.data)
-        #print (f'Total {l} examples, average length {np.mean(self.lengths)} seconds.')
 
     def load_dataset(self, metadata):
         units = []
@@ -144,24 +78,6 @@ class SpeechDataset(data.Dataset):
                 # exit()
         return units
 
-    # def smooth(self, x, win_size):
-    #     org = x
-    #     x = x.transpose(0, 1) #torch.Size([80, 366])
-    #     # print('x.shape:', x.shape)
-    #     # exit()
-    #     # kernel shape: [out_channels, in_channels/groups, kernel_size]
-    #     # kernel = torch.ones((x.shape[0], 1, win_size)) / win_size
-    #     n = torch.arange(win_size).float() #.to(x.device)
-    #     # hann = 0.5 * (1 - torch.cos(2 * torch.pi * n / (win_size - 1)))
-    #     hann = 0.5 * (1 - torch.cos(2 * torch.pi * (n+0.5) / (win_size)))
-    #     hann = hann / hann.sum()
-    #     kernel = hann.unsqueeze(0).unsqueeze(0).expand(x.shape[0], 1, win_size) #.to(x.device)
-        
-    #     mel_component = F.conv1d(input=x.unsqueeze(0), weight=kernel, groups=x.shape[0], padding='same')
-        
-    #     mel_component = mel_component.squeeze(0).transpose(0, 1)
-    #     assert mel_component.shape == org.shape
-    #     return mel_component
     
     def smooth(self, x, win_size):
         org = x
@@ -203,7 +119,6 @@ class SpeechDataset(data.Dataset):
         unit = torch.LongTensor(np.load(self.units[i]))
         dedup_unit, duration = torch.unique_consecutive(unit, return_counts=True)
         mel = torch.FloatTensor(np.load(self.mels[i]))
-        # print('mel shape:', mel.shape) #torch.Size([366, 80])
         
         ### Get different time-scale features in the mel-spectrogram
         mel_1 = self.smooth(mel, win_size=129) #low frequency component
@@ -212,20 +127,6 @@ class SpeechDataset(data.Dataset):
         mel_4 = mel - self.smooth(mel, win_size=17) #high frequency component (# fine detail / noise)
         ###
         
-        ###
-        #print('I want to see the duration info:',duration)
-        #print('###SSL Token###',np.load(self.units[i]))
-        #print('###ASR Token###',np.load(self.units[i].replace("features", "ASR_features")))
-        
-        # print('###***###',self.gender[i])
-        # exit()
-        # gender = torch.FloatTensor([self.gender2idx[self.gender[i]]])   #([ord(self.gender[i])])
-        # #print('gender-should be a scalar',gender)
-        # accent = torch.FloatTensor([self.accent2idx[self.accent[i]]]) #([ord(self.accent[i][0])+ord(self.accent[i][1])+ord(self.accent[i][2])])
-        # #print('accent-should be a scalar',accent)
-        # #print('accent',accent)
-        # emotion = torch.FloatTensor([self.emotion2idx[self.emotion[i]]])
-        # ###
         
         energy, f0 = torch.FloatTensor(np.load(self.energy[i])), torch.FloatTensor(np.load(self.f0[i]))
         voiced = (f0 != 0)
