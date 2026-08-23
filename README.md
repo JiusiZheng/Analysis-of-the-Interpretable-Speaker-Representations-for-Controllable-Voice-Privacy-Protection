@@ -50,7 +50,7 @@ CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
 Both commands run in the background. Processing logs are saved to `vctk_process.txt` and `l2a_process.txt`, respectively.
 
 
-## 3. Get the Vocoder and Pre-trained UUVC model
+## 3. Get the Pre-trained Vocoder and UUVC model
 
 We use the pretrained [HiFi-GAN vocoder](https://github.com/jik876/hifi-gan). Download the [Universal-V1](https://drive.google.com/drive/folders/1YuOoV3lO2-Hhn1F2HJ2aQ4S0LC1JdKLd) model and place its checkpoint files in:
 
