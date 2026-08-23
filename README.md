@@ -58,7 +58,7 @@ We use the pretrained [HiFi-GAN vocoder](https://github.com/jik876/hifi-gan). Do
 vocoder/cp_hifigan/
 ```
 
-Also, place the downloaded [checkpoint of retrained UUVC model](https://cmu.app.box.com/s/76f7kkhuns929da4kaafjqqk2x7nf2d3) in the corresponding model checkpoint directory before running training or inference.
+Also, place the downloaded [checkpoint of pretrained UUVC model](https://cmu.app.box.com/s/76f7kkhuns929da4kaafjqqk2x7nf2d3) in the corresponding model checkpoint directory before running training or inference.
 
 ```text
 pretrained_LibriTTS360_VCTK_ESD-selected/
