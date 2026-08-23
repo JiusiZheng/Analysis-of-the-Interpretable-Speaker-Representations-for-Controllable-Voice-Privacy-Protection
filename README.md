@@ -31,7 +31,21 @@ cd ..
 
 > **Note:** Minor compatibility issues may occur when installing `textlesslib` and `fairseq`, but they do not currently affect model training or evaluation.
 
-## 2. Get the Vocoder
+### 2. Data Processing
+Convert the VCTK and L2-Arctic (L2A) datasets into speech units with pitch information.
+VCTK
+CUDA_VISIBLE_DEVICES=0 nohup python s2u-VCTK.py \
+    --VCTK \
+    --with_pitch_unit \
+    > vctk_process.txt 2>&1 &
+L2-Arctic
+CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
+    --with_pitch_unit \
+    > l2a_process.txt 2>&1 &
+Both commands run in the background. Processing logs are saved to vctk_process.txt and l2a_process.txt, respectively.
+
+
+## 3. Get the Vocoder
 
 We use the pretrained [HiFi-GAN vocoder](https://github.com/jik876/hifi-gan). Download the [Universal-V1](https://drive.google.com/drive/folders/1YuOoV3lO2-Hhn1F2HJ2aQ4S0LC1JdKLd) model and place its checkpoint files in:
 
