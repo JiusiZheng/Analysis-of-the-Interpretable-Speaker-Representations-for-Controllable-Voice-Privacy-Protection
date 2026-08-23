@@ -32,7 +32,7 @@ cd ..
 > **Note:** Minor compatibility issues may occur when installing `textlesslib` and `fairseq`, but they do not currently affect model training or evaluation.
 
 ### 2. Data Processing
-Convert the VCTK and L2-Arctic datasets into speech units with pitch information. You need to configure '--datadir' and '--outdir' by yourself.
+Convert the VCTK and L2-Arctic datasets into speech units with pitch information. You need to configure `--datadir` and `--outdir` by yourself.
 
 VCTK
 ```
