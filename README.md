@@ -49,7 +49,7 @@ CUDA_VISIBLE_DEVICES=0 nohup python s2u-L2A.py \
 ```
 Both commands run in the background. Processing logs are saved to `vctk_process.txt` and `l2a_process.txt`, respectively.
 
-Modify the absolute paths in `train_data_final_vctk_l2a.txt` and `valid_data_final_vctk_l2a.txt`.
+Modify the absolute paths in `datasets_merged/train_data_final_vctk_l2a.txt` and `datasets_merged/valid_data_final_vctk_l2a.txt`.
 
 ## 3. Get the Pre-trained Vocoder and UUVC model
 
