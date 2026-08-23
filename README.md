@@ -64,6 +64,18 @@ Also, place the downloaded [checkpoint of pretrained UUVC model](https://cmu.app
 ```text
 pretrained_LibriTTS360_VCTK_ESD-selected/
 ```
+## 4.Training of the Decomposition Framework
 
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 nohup python train.py \
+    --saving_path ckpt/ \
+    --training_step 60000 \
+    --batch_size 100 \
+    --check_val_every_n_epoch 5 \
+    --traintxt datasets_merged/train_data_final_vctk_l2a.txt \
+    --validtxt datasets_merged/valid_data_final_vctk_l2a.txt \
+    --distributed \
+    > train_decomposition.log 2>&1 &
+```
 
 
