@@ -66,8 +66,8 @@ torch.load = torch_load_safe
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_clusters', type=int, choices=[50, 100, 200], default=200)
 parser.add_argument('--model', type=str, default='hubert-base-ls960')
-parser.add_argument('--datadir', type=str, default='/vol/das-nobackup/users/jzheng/Database/datasets/l2arctic_release_v5/l2arctic_release_v5')
-parser.add_argument('--outdir', type=str, default='/vol/das-nobackup/users/jzheng/PSST_1/UUVC/features/L2A')
+parser.add_argument('--datadir', type=str, default='')
+parser.add_argument('--outdir', type=str, default='/UUVC/features/L2A')
 parser.add_argument('--with_pitch_unit', action='store_true')
 parser.add_argument('--VCTK', action='store_true')
 
