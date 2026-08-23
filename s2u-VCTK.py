@@ -67,8 +67,8 @@ torch.load = torch_load_safe
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_clusters', type=int, choices=[50, 100, 200], default=200)
 parser.add_argument('--model', type=str, default='hubert-base-ls960')
-parser.add_argument('--datadir', type=str, default='/vol/das-nobackup/users/jzheng/Database/datasets/VCTK-Corpus-0/VCTK-Corpus-0')
-parser.add_argument('--outdir', type=str, default='/vol/tensusers8/jzheng/T8_Exp/PSST_1/features/VCTK')
+parser.add_argument('--datadir', type=str, default='.../VCTK-Corpus')
+parser.add_argument('--outdir', type=str, default='.../features/VCTK')
 parser.add_argument('--with_pitch_unit', action='store_true')
 parser.add_argument('--VCTK', action='store_true')
 
