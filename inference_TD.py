@@ -37,8 +37,8 @@ class Namespace:
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--metapath', type=str, default='/vol/das-nobackup/users/jzheng/accent_500.txt') # modify 1/2
-parser.add_argument('--result_dir', type=str, default='/vol/tensusers8/jzheng/T8_Exp/New-Speech-Split/Speech_Accent_Archive') # modify 2/2
+parser.add_argument('--metapath', type=str, default='') # modify 1/2
+parser.add_argument('--result_dir', type=str, default='') # modify 2/2
 parser.add_argument('--ckpt', type=str, default='/vol/tensusers8/jzheng/T8_Exp/PSST_2/UUVC/ckpt/last.ckpt')
 parser.add_argument('--config', type=str, default='/vol/tensusers8/jzheng/T8_Exp/PSST_2/UUVC/ckpt/config.json')
 
