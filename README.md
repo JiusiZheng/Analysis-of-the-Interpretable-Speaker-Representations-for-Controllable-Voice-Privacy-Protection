@@ -64,7 +64,7 @@ Also, place the downloaded [checkpoint of pretrained UUVC model](https://cmu.app
 ```text
 pretrained_LibriTTS360_VCTK_ESD-selected/
 ```
-## 4.Training of the Decomposition Framework
+## 4. Training of the Decomposition Framework
 
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 nohup python train.py \
@@ -78,18 +78,18 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 nohup python train.py \
     > train_decomposition.log 2>&1 &
 ```
 
-## 5.Inference
+## 5. Inference
 This is an example for synthesis of the converted speech, the format of the meta data can be found in `accent_300.txt`:
 ```
 python inference_TD.py --result_dir ./samples --metapath META_PATH
 ```
 
-## 6.Visualization of the Mel-Spectrogram
+## 6. Visualization of the Mel-Spectrogram
 ```
 python time-scale_analysis.py
 ```
 
-## 7.Acknowledgements
+## 7. Acknowledgements
 
 This work builds upon the open-source implementation of [UUVC](https://github.com/b04901014/UUVC). We sincerely thank the original authors for making their code publicly available. Our repository extends and adapts UUVC for the analysis of interpretable speaker representations and controllable voice privacy protection.
 
