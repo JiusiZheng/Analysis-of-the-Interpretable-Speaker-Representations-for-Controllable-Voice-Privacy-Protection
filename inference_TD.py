@@ -136,29 +136,15 @@ class Split_Tester(nn.Module):
         f0 = torch.sigmoid(f0_preds)
         #Energy prediction
         E = torch.sigmoid(self.Ep(f0_feats))
-        #MelSpec Prediction
-        ### Processing source speaker embedding
-        ## new way starts
+
         split_index = int(alpha*256)
         
-        # spkr = torch.cat([spkr_src[:, :split_index], spkr_target[:, split_index:]],dim=-1)
-        
         spkr = torch.cat([spkr_target[:, :256-split_index], spkr_target[:, 256-split_index:]],dim=-1)
-        
-        # ### Control which kind of substitution
-        # if split_index+64 < 256:
-        #     #print('1', alpha)
-        #     spkr = torch.cat([spkr_src[:, :split_index], spkr_target[:, split_index:split_index+64], spkr_src[:, split_index+64:]],dim=-1)
-        # else:
-        #     #print('2', alpha)
-        #     spkr = torch.cat([spkr_src[:, :split_index], spkr_target[:, split_index:]],dim=-1)
-        
+    
         pred_mel_1, pred_mel_2, pred_mel_3, pred_mel_4 = self.u2m(E, f0, V, spkr, UL, None)
         pred_mels = pred_mel_1 + pred_mel_2 + pred_mel_3 + pred_mel_4
         #Vocoder, LoudNorm
         wav = self.vocoder(pred_mels).squeeze(0).squeeze(0).detach().cpu().numpy()
-        # loudness = meter.integrated_loudness(wav)
-        # wav = pyln.normalize.loudness(wav, loudness, -12.0)
         return wav
 
 
@@ -228,12 +214,7 @@ for line in tqdm(lines):
         UL = encoder(src_wav)['units']
         U, L = torch.unique_consecutive(UL, return_counts=True)
         U, L, UL = U.unsqueeze(0), L.unsqueeze(0), UL.unsqueeze(0)
-        # transfer['pitch-energy'] = model(UL, tgt_attributes['a_p'], src_attributes['a_s'], L=None, direct_UL=True)
-        # transfer['speaker'] = model(UL, src_attributes['a_p'], tgt_attributes['a_s'], L=None, direct_UL=True)
-        # transfer['rhythm'] = model(U, src_attributes['a_p'], src_attributes['a_s'], tgt_attributes['a_r'])
-        # transfer['prosody'] = model(U, tgt_attributes['a_p'], src_attributes['a_s'],  tgt_attributes['a_r'])
-        # transfer['imitation'] = model(U, tgt_attributes['a_p'], tgt_attributes['a_s'],  tgt_attributes['a_r'])
-        
+
         transfer['speaker_split_0.0'] = split_model(U=UL, PVQ=src_attributes['a_p'], spkr_src=src_attributes['a_s'], spkr_target=tgt_attributes['a_s'], L=None, direct_UL=True, alpha=0.0)
         transfer['speaker_split_0.25'] = split_model(U=UL, PVQ=src_attributes['a_p'], spkr_src=src_attributes['a_s'], spkr_target=tgt_attributes['a_s'], L=None, direct_UL=True, alpha=0.25)
         transfer['speaker_split_0.5'] = split_model(U=UL, PVQ=src_attributes['a_p'], spkr_src=src_attributes['a_s'], spkr_target=tgt_attributes['a_s'], L=None, direct_UL=True, alpha=0.50)
