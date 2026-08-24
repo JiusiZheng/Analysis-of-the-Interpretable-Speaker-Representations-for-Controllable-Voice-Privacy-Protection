@@ -89,3 +89,8 @@ python inference_TD.py --result_dir ./samples --metapath META_PATH
 python time-scale_analysis.py
 ```
 
+## 7.Acknowledgements
+
+This work builds upon the open-source implementation of [UUVC](https://github.com/b04901014/UUVC). We sincerely thank the original authors for making their code publicly available. Our repository extends and adapts UUVC for the analysis of interpretable speaker representations and controllable voice privacy protection.
+
+
