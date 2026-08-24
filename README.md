@@ -84,3 +84,8 @@ This is an example for synthesis of the converted speech, the format of the meta
 python inference_TD.py --result_dir ./samples --metapath META_PATH
 ```
 
+## Visualization of the Mel-Spectrogram
+```
+python time-scale_analysis.py
+```
+
