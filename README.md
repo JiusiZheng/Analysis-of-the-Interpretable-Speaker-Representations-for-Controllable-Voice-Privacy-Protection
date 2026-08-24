@@ -78,13 +78,13 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 nohup python train.py \
     > train_decomposition.log 2>&1 &
 ```
 
-## Inference
+## 5.Inference
 This is an example for synthesis of the converted speech, the format of the meta data can be found in `accent_300.txt`:
 ```
 python inference_TD.py --result_dir ./samples --metapath META_PATH
 ```
 
-## Visualization of the Mel-Spectrogram
+## 6.Visualization of the Mel-Spectrogram
 ```
 python time-scale_analysis.py
 ```
